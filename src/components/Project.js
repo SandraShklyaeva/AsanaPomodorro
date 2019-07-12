@@ -32,8 +32,8 @@ export default class Project extends React.Component {
             return (
               <ProjectItem
                 key={i}
-                itemId={i}
-                name={item}
+                itemId={item.gid}
+                name={item.name}
                 selectItem={this.handleSelectItem}
                 deleteItem={this.handleDeleteItem}
               />

@@ -9,7 +9,7 @@ export default class Timer extends React.Component {
       pomodorros: 0,
       time: 0,
       start: 0,
-      duration: 2000,
+      duration: 40,
       isStarted: false,
       gradient: {}
     };
@@ -23,7 +23,7 @@ export default class Timer extends React.Component {
       pomodorros: this.state.pomodorros + 1,
       time: 0,
       start: 0,
-      duration: 2000,
+      duration: 40,
       isStarted: false,
       gradient: {}
     });
@@ -56,7 +56,7 @@ export default class Timer extends React.Component {
             }
           });
         }
-      });
+      }, 2000);
     }
     this.setState({
       isStarted: !this.state.isStarted

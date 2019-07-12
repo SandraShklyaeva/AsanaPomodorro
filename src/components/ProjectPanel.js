@@ -1,29 +1,73 @@
 import React from 'react';
 import Project from './Project';
+import { connect } from 'react-redux';
+import { addArticle, fetchProducts } from '../services/actions';
 
-export default class ProjectPanel extends React.Component {
+const mapStateToProps = state => {
+  return {
+    articles: state.root.articles,
+    projects: state.projects.projects,
+    loading: state.projects.loading,
+    error: state.projects.error
+  };
+};
+
+function mapDispatchToProps(dispatch) {
+  return {
+    addArticle: article => dispatch(addArticle(article)),
+    fetchProducts: () => dispatch(fetchProducts())
+  };
+}
+
+class ConnectedProjectPanel extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      projects: [
-        {
-          id: 'Project1',
-          todos: ['Read JSDOcs', 'Continue ReactJS']
-        },
-        {
-          id: 'Project2',
-          todos: ['Finish Homework', 'Buy shiba']
-        },
-        {
-          id: 'Project3',
-          todos: ['Find new flat', 'Continue reading a book']
-        }
-      ]
-    };
-
     this.handleSelectItem = this.handleSelectItem.bind(this);
     this.handleDeleteItem = this.handleDeleteItem.bind(this);
+    this.handleHelloClick = this.handleHelloClick.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.fetchProducts();
+    /*client.users
+      .me()
+      .then(user => {
+        console.log(user);
+        const userId = user.id;
+        // The user's "default" workspace is the first one in the list, though
+        // any user can have multiple workspaces so you can't always assume this
+        // is the one you want to work with.
+        const workspaceId = user.workspaces[2].gid;
+        console.log(workspaceId);
+        return client.tasks.findAll({
+          assignee: userId,
+          workspace: workspaceId,
+          opt_fields: 'id,name'
+        });
+      })
+      .then(response => {
+        console.log(response);
+        // There may be more pages of data, we could stream or return a promise
+        // to request those here - for now, let's just return the first page
+        // of items.
+        return response.data;
+      })
+      .then(list => {
+        let projectsUpdated = this.state.projects
+          .slice(0)
+          .map(function(project) {
+            project.todos = list;
+            return project;
+          });
+        this.setState({
+          projects: projectsUpdated
+        });
+        console.log(list);
+      })
+      .catch(e => {
+        console.log(e);
+      });*/
   }
 
   handleSelectItem(item) {
@@ -44,20 +88,42 @@ export default class ProjectPanel extends React.Component {
     });
   }
 
+  handleHelloClick() {
+    this.props.addArticle({ title: 'TITLE', id: 'ID' });
+  }
+
   render() {
     return (
       <div>
-        {this.state.projects.map(function(item) {
-          return (
-            <Project
-              key={item.id}
-              project={item}
-              selectItem={this.handleSelectItem}
-              deleteItem={this.handleDeleteItem}
-            />
-          );
-        }, this)}
+        <div>
+          <div onClick={this.handleHelloClick}>Hello</div>
+          {this.props.articles.map(el => (
+            <div className='list-group-item' key={el.id}>
+              {el.title}
+            </div>
+          ))}
+        </div>
+        {this.props.loading ? (
+          <div>I am Loading</div>
+        ) : (
+          this.props.projects.map(function(item) {
+            return (
+              <Project
+                key={item.id}
+                project={item}
+                selectItem={this.handleSelectItem}
+                deleteItem={this.handleDeleteItem}
+              />
+            );
+          }, this)
+        )}
       </div>
     );
   }
 }
+
+const ProjectPanel = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ConnectedProjectPanel);
+export default ProjectPanel;
