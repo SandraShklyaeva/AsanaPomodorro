@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/AsanaPomodorro/static/css/main.686dbefa.chunk.css",
+    "main.js": "/AsanaPomodorro/static/js/main.14ab45e9.chunk.js",
+    "main.js.map": "/AsanaPomodorro/static/js/main.14ab45e9.chunk.js.map",
+    "runtime~main.js": "/AsanaPomodorro/static/js/runtime~main.27dcb877.js",
+    "runtime~main.js.map": "/AsanaPomodorro/static/js/runtime~main.27dcb877.js.map",
+    "static/js/2.283c56d7.chunk.js": "/AsanaPomodorro/static/js/2.283c56d7.chunk.js",
+    "static/js/2.283c56d7.chunk.js.map": "/AsanaPomodorro/static/js/2.283c56d7.chunk.js.map",
+    "index.html": "/AsanaPomodorro/index.html",
+    "precache-manifest.f12806df55f9d716a7d3ba18219c4dd0.js": "/AsanaPomodorro/precache-manifest.f12806df55f9d716a7d3ba18219c4dd0.js",
+    "service-worker.js": "/AsanaPomodorro/service-worker.js",
+    "static/css/main.686dbefa.chunk.css.map": "/AsanaPomodorro/static/css/main.686dbefa.chunk.css.map"
+  }
+}
