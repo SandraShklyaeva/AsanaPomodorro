@@ -1,31 +1,21 @@
 import {
-  FETCH_PRODUCTS_BEGIN,
-  FETCH_PRODUCTS_SUCCESS,
-  FETCH_PRODUCTS_FAILURE
+  FETCH_PROJECTS_BEGIN,
+  FETCH_PROJECTS_SUCCESS,
+  FETCH_PROJECTS_FAILURE,
+  FETCH_TASKS_BEGIN,
+  FETCH_TASKS_SUCCESS,
+  FETCH_TASKS_FAILURE
 } from '../actions.js';
 
 const initialState = {
-  projects: [
-    {
-      id: 'Project1',
-      todos: []
-    },
-    {
-      id: 'Project2',
-      todos: []
-    },
-    {
-      id: 'Project3',
-      todos: []
-    }
-  ],
+  projects: [],
   loading: false,
   error: null
 };
 
 function rootReducer(state = initialState, action) {
   switch (action.type) {
-    case FETCH_PRODUCTS_BEGIN:
+    case FETCH_PROJECTS_BEGIN, FETCH_TASKS_BEGIN:
       // Mark the state as "loading" so we can show a spinner or something
       // Also, reset any errors. We're starting fresh.
       return {
@@ -34,13 +24,36 @@ function rootReducer(state = initialState, action) {
         error: null
       };
 
-    case FETCH_PRODUCTS_SUCCESS:
+
+    case FETCH_TASKS_SUCCESS:
+      // All done: set loading "false".
+      // Also, replace the items with the ones from the server
+      console.log('PAYLOAD', action.payload);
+      let tasksUpdated = state.projects.map(function(project) {
+        if (project.id === action.payload.data.project.id) {
+          project.todos = action.payload.data.tasks
+        }
+        return project;
+      });
+      console.log('RESULT', tasksUpdated);
+      return {
+        ...state,
+        loading: false,
+        projects: tasksUpdated
+      };
+
+
+    case FETCH_PROJECTS_SUCCESS:
       // All done: set loading "false".
       // Also, replace the items with the ones from the server
 
-      let projectsUpdated = state.projects.slice(0).map(function(project) {
-        project.todos = action.payload.products;
-        return project;
+      let projectsUpdated = action.payload.projects.map(function(project) {
+        project.todos = action.payload.projects;
+        return {
+            id: project.id,
+            todos: [],
+            name: project.name
+        };
       });
       return {
         ...state,
@@ -48,7 +61,7 @@ function rootReducer(state = initialState, action) {
         projects: projectsUpdated
       };
 
-    case FETCH_PRODUCTS_FAILURE:
+    case FETCH_PROJECTS_FAILURE, FETCH_TASKS_FAILURE:
       // The request failed. It's done. So set loading to "false".
       // Save the error, so we can display it somewhere.
       // Since it failed, we don't have items to display anymore, so set `items` empty.
@@ -60,7 +73,7 @@ function rootReducer(state = initialState, action) {
         ...state,
         loading: false,
         error: action.payload.error,
-        items: []
+        projects: []
       };
 
     default:

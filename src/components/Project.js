@@ -1,12 +1,14 @@
 import React from 'react';
 import ProjectItem from './ProjectItem';
 
+
 export default class Project extends React.Component {
   constructor(props) {
     super(props);
 
     this.handleSelectItem = this.handleSelectItem.bind(this);
     this.handleDeleteItem = this.handleDeleteItem.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   handleSelectItem(item) {
@@ -23,10 +25,14 @@ export default class Project extends React.Component {
     });
   }
 
+  handleClick() {
+      this.props.fetchTasks(this.props.project);
+  }
+
   render() {
     return (
       <div>
-        <h4>{this.props.project.id}</h4>
+        <h4 onClick={this.handleClick}>{this.props.project.name}</h4>
         <ul>
           {this.props.project.todos.map(function(item, i) {
             return (

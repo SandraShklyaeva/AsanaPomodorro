@@ -1,0 +1,22 @@
+.countdown, .countdownWrapper {
+  position: relative;
+  margin: auto;
+  text-align: center;
+}
+
+.countdown-number {
+  color: black;
+  display: inline-block;
+}
+
+.countdown .countdownCircle {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.countdown .countdownCircle circle {
+  transition: stroke-dashoffset 0.35s;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+}

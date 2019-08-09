@@ -1,7 +1,7 @@
 import React from 'react';
 import Project from './Project';
 import { connect } from 'react-redux';
-import { addArticle, fetchProducts } from '../services/actions';
+import { addArticle, fetchProjects, fetchTasks } from '../services/actions';
 
 const mapStateToProps = state => {
   return {
@@ -15,7 +15,8 @@ const mapStateToProps = state => {
 function mapDispatchToProps(dispatch) {
   return {
     addArticle: article => dispatch(addArticle(article)),
-    fetchProducts: () => dispatch(fetchProducts())
+    fetchProjects: () => dispatch(fetchProjects()),
+    fetchTasks: (project) => dispatch(fetchTasks(project))
   };
 }
 
@@ -26,10 +27,12 @@ class ConnectedProjectPanel extends React.Component {
     this.handleSelectItem = this.handleSelectItem.bind(this);
     this.handleDeleteItem = this.handleDeleteItem.bind(this);
     this.handleHelloClick = this.handleHelloClick.bind(this);
+    this.handleFetchTasks = this.handleFetchTasks.bind(this);
   }
 
   componentDidMount() {
-    this.props.fetchProducts();
+    this.props.fetchProjects();
+    //this.props.fetchProducts();
     /*client.users
       .me()
       .then(user => {
@@ -92,6 +95,11 @@ class ConnectedProjectPanel extends React.Component {
     this.props.addArticle({ title: 'TITLE', id: 'ID' });
   }
 
+  handleFetchTasks(project) {
+    console.log('I AM PROJECT',project);
+    this.props.fetchTasks(project);
+  }
+
   render() {
     return (
       <div>
@@ -113,6 +121,7 @@ class ConnectedProjectPanel extends React.Component {
                 project={item}
                 selectItem={this.handleSelectItem}
                 deleteItem={this.handleDeleteItem}
+                fetchTasks={this.handleFetchTasks}
               />
             );
           }, this)

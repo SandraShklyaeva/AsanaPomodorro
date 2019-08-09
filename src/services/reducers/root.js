@@ -1,5 +1,7 @@
 import { ADD_ARTICLE, FETCH_TASKS } from '../constants';
 import projects from "./projects";
+import user from "./user";
+import settings from "./settings";
 import { combineReducers } from "redux";
 
 const initialState = {
@@ -55,6 +57,8 @@ function root(state = initialState, action) {
 }
 
 export default combineReducers({
+  user,
   projects,
+  settings,
   root
 });
